@@ -13,6 +13,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
 
+
+  final List<String> categoryImages = [
+    "Images/graphic design.png",
+    "Images/programming.png",
+    "Images/finance1.png",
+    "Images/uidesign.png",
+  ];
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -45,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               SizedBox(height: screenHeight * 0.02),
 
-              // Greeting row with profile image
+
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
                 child: Row(
@@ -161,34 +169,28 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               SizedBox(height: screenHeight * 0.02),
 
-              // Category Images in Stack
+              // Category Images in GridView
               Container(
-                height: screenHeight * 0.6,
-                width: double.infinity,
-                color: Color(0xfffef7ff),
-                child: Stack(
-                  children: [
-                    Positioned(
-                      left: screenWidth * 0.1,
-                      top: screenHeight * 0.05,
-                      child: displayImage(screenHeight * 0.22, "Images/graphic design.png"),
-                    ),
-                    Positioned(
-                      right: screenWidth * 0.1,
-                      top: screenHeight * 0.05,
-                      child: displayImage(screenHeight * 0.22, "Images/programming.png"),
-                    ),
-                    Positioned(
-                      left: screenWidth * 0.1,
-                      top: screenHeight * 0.35,
-                      child: displayImage(screenHeight * 0.22, "Images/finance1.png"),
-                    ),
-                    Positioned(
-                      right: screenWidth * 0.1,
-                      top: screenHeight * 0.35,
-                      child: displayImage(screenHeight * 0.22, "Images/uidesign.png"),
-                    ),
-                  ],
+                height: screenHeight * 0.5,
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+                child: GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 15,
+                    mainAxisSpacing: 15,
+                    childAspectRatio: 1,
+                  ),
+                  itemCount: categoryImages.length,
+                  itemBuilder: (context, index) {
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(30),
+                      child: Image.asset(
+                        categoryImages[index],
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  },
                 ),
               ),
             ],
@@ -244,20 +246,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
-  Padding displayImage(double size, String image) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: SizedBox(
-        height: size,
-        width: size,
-        child: Image.asset(
-          image,
-          fit: BoxFit.cover,
-        ),
-      ),
-    );
-  }
 }
-
-
