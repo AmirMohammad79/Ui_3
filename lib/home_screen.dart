@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travel/utils/constant.dart';
 
+import 'Widgets/category_button.dart';
 import 'Widgets/navbar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,6 +13,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
+  int selectedCategory = 0;
 
 
   final List<String> categoryImages = [
@@ -53,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               SizedBox(height: screenHeight * 0.02),
 
-
+              // Greeting row with profile image
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
                 child: Row(
@@ -97,42 +99,26 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               SizedBox(height: screenHeight * 0.02),
 
-              // Category Selection
+
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04 , vertical:screenWidth * 0.04 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Card(
-                      color: primaryColor,
-                      child: SizedBox(
-                        height: screenHeight * 0.06,
-                        width: screenWidth * 0.25,
-                        child: const Center(
-                          child: Text(
-                            "Top",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
+                    CategoryButton(
+                      label: "Top",
+                      isSelected: selectedCategory == 0,
+                      onTap: () => setState(() => selectedCategory = 0),
                     ),
-                    const Text(
-                      "Design",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
+                    CategoryButton(
+                      label: "Design",
+                      isSelected: selectedCategory == 1,
+                      onTap: () => setState(() => selectedCategory = 1),
                     ),
-                    const Text(
-                      "Marketing",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
+                    CategoryButton(
+                      label: "Marketing",
+                      isSelected: selectedCategory == 2,
+                      onTap: () => setState(() => selectedCategory = 2),
                     ),
                     Image.asset(
                       "Images/filter.png",
@@ -247,3 +233,5 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+
