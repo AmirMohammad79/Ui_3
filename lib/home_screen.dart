@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:travel/utils/constant.dart';
 
+import 'Widgets/navbar.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -258,30 +260,4 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-// Custom navigation bar button widget
-class NavBarButton extends StatelessWidget {
-  final IconData icon;
-  final int index;
-  final int selectedIndex;
-  final VoidCallback onTap;
 
-  const NavBarButton({
-    required this.icon,
-    required this.index,
-    required this.selectedIndex,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    bool isSelected = index == selectedIndex;
-    return GestureDetector(
-      onTap: onTap,
-      child: Icon(
-        icon,
-        size: isSelected ? 40 : 30,
-        color: isSelected ? primaryColor : Colors.black45,
-      ),
-    );
-  }
-}
