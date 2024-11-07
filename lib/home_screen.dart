@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:travel/utils/constant.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       body: Padding(
@@ -15,6 +22,7 @@ class HomeScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              // Top menu row
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
                 child: Row(
@@ -34,6 +42,8 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: screenHeight * 0.02),
+
+              // Greeting row with profile image
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
                 child: Row(
@@ -76,6 +86,8 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: screenHeight * 0.02),
+
+              // Category Selection
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
                 child: Row(
@@ -113,13 +125,15 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     Image.asset(
-                      "Images/filtr.png",
+                      "Images/filter.png",
                       height: screenHeight * 0.05,
                     ),
                   ],
                 ),
               ),
               SizedBox(height: screenHeight * 0.02),
+
+              // Categories Header
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
                 child: const Row(
@@ -144,75 +158,33 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: screenHeight * 0.02),
+
+              // Category Images in Stack
               Container(
-                height: screenHeight * 0.7,
+                height: screenHeight * 0.6,
                 width: double.infinity,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Colors.white, Color.fromARGB(255, 233, 236, 246)],
-                  ),
-                ),
+                color: Color(0xfffef7ff),
                 child: Stack(
                   children: [
                     Positioned(
-                      left: 0,
-                      child: displayImage(screenHeight * 0.3, "Images/graphic design.png"),
+                      left: screenWidth * 0.1,
+                      top: screenHeight * 0.05,
+                      child: displayImage(screenHeight * 0.22, "Images/graphic design.png"),
                     ),
                     Positioned(
-                      right: 0,
-                      child: displayImage(screenHeight * 0.27, "Images/programming.png"),
+                      right: screenWidth * 0.1,
+                      top: screenHeight * 0.05,
+                      child: displayImage(screenHeight * 0.22, "Images/programming.png"),
                     ),
                     Positioned(
-                      left: 0,
-                      top: screenHeight * 0.4,
-                      child: displayImage(screenHeight * 0.27, "Images/finance1.png"),
-                    ),
-                    Positioned(
-                      right: 0,
+                      left: screenWidth * 0.1,
                       top: screenHeight * 0.35,
-                      child: displayImage(screenHeight * 0.3, "Images/uidesign.png"),
+                      child: displayImage(screenHeight * 0.22, "Images/finance1.png"),
                     ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        height: screenHeight * 0.13,
-                        width: double.infinity,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(40),
-                            topRight: Radius.circular(40),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth * 0.04,
-                            vertical: screenHeight * 0.015,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Card(
-                                color: primaryColor,
-                                child: SizedBox(
-                                  height: screenHeight * 0.06,
-                                  width: screenWidth * 0.15,
-                                  child: const Icon(
-                                    Icons.home,
-                                    size: 35,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                              const Icon(Icons.watch_later, color: Colors.black45, size: 35),
-                              const Icon(Icons.favorite, color: Colors.black45, size: 35),
-                              const Icon(Icons.person_2, color: Colors.black45, size: 35),
-                            ],
-                          ),
-                        ),
-                      ),
+                    Positioned(
+                      right: screenWidth * 0.1,
+                      top: screenHeight * 0.35,
+                      child: displayImage(screenHeight * 0.22, "Images/uidesign.png"),
                     ),
                   ],
                 ),
@@ -221,19 +193,94 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
+
+      // Bottom Navigation Bar
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          height: screenHeight * 0.1,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(30),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 10,
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              NavBarButton(
+                icon: Icons.home,
+                index: 0,
+                selectedIndex: selectedIndex,
+                onTap: () => setState(() => selectedIndex = 0),
+              ),
+              NavBarButton(
+                icon: Icons.watch_later,
+                index: 1,
+                selectedIndex: selectedIndex,
+                onTap: () => setState(() => selectedIndex = 1),
+              ),
+              NavBarButton(
+                icon: Icons.favorite,
+                index: 2,
+                selectedIndex: selectedIndex,
+                onTap: () => setState(() => selectedIndex = 2),
+              ),
+              NavBarButton(
+                icon: Icons.person,
+                index: 3,
+                selectedIndex: selectedIndex,
+                onTap: () => setState(() => selectedIndex = 3),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
-  Padding displayImage(double height, String image) {
+  Padding displayImage(double size, String image) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
-        height: height,
-        width: 193,
+        height: size,
+        width: size,
         child: Image.asset(
           image,
-          fit: BoxFit.fill,
+          fit: BoxFit.cover,
         ),
+      ),
+    );
+  }
+}
+
+// Custom navigation bar button widget
+class NavBarButton extends StatelessWidget {
+  final IconData icon;
+  final int index;
+  final int selectedIndex;
+  final VoidCallback onTap;
+
+  const NavBarButton({
+    required this.icon,
+    required this.index,
+    required this.selectedIndex,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    bool isSelected = index == selectedIndex;
+    return GestureDetector(
+      onTap: onTap,
+      child: Icon(
+        icon,
+        size: isSelected ? 40 : 30,
+        color: isSelected ? primaryColor : Colors.black45,
       ),
     );
   }
